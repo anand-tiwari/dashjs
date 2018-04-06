@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Dash.js Rocks</title>
+        <style>
+            video {
+                width: 640px;
+                height: 360px;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <video id="videoPlayer" controls></video>
+        </div>
+        <script src="./dash/dash.all.min.js"></script>
+        <script>
+            (function(){
+                <!--var url = "https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd";-->
+                var url = "http://localhost:3002/dash/output/Manifest.mpd"
+                var video = document.querySelector("#videoPlayer");
+                var player = dashjs.MediaPlayer().create();
+                player.initialize();
+                player.getDebug().setLogToBrowserConsole(false); // turns off console logging
+                player.setScheduleWhilePaused(false); // stops the player from loading segments while paused
+                player.setFastSwitchEnabled(true); // enables buffer replacement when switching bitrates for faster switching
+                player.setAutoPlay(true); // remove this line if you want the player to start automatically on load
+                player.attachView(video); // tell the player which videoElement it should use
+                player.attachSource(url); // provide the manifest source
+            })();
+        </script>
+    </body>
+</html>
